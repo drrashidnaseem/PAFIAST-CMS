@@ -95,6 +95,109 @@ namespace AuthSystem.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("AuthSystem.Models.Blank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Statement")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Synonym1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Synonym2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Synonym3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("Blanks");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.MCQ", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
+
+                    b.ToTable("MCQs");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.Subject", b =>
+                {
+                    b.Property<int>("SubjectId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
+
+                    b.Property<int?>("SubjectId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SubjectName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SubjectId");
+
+                    b.HasIndex("SubjectId1");
+
+                    b.ToTable("Subjects");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -232,6 +335,35 @@ namespace AuthSystem.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AuthSystem.Models.Blank", b =>
+                {
+                    b.HasOne("AuthSystem.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.MCQ", b =>
+                {
+                    b.HasOne("AuthSystem.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.Subject", b =>
+                {
+                    b.HasOne("AuthSystem.Models.Subject", null)
+                        .WithMany("Subjects")
+                        .HasForeignKey("SubjectId1");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -281,6 +413,11 @@ namespace AuthSystem.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.Subject", b =>
+                {
+                    b.Navigation("Subjects");
                 });
 #pragma warning restore 612, 618
         }

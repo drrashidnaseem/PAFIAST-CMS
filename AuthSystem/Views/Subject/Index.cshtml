@@ -1,0 +1,25 @@
+﻿@model AuthSystem.Models.Subject
+
+@{
+    ViewData["Title"] = "Select Subject";
+}
+
+<h1>Select Subject</h1>
+@foreach (var subject in Model.Subjects)
+{
+    <div class="card" style="width: 12rem;">
+        <div class="card-body">
+                <h5>@subject.SubjectName</h5>
+
+                <a href="@Url.Action("SelectSubject", "Subject", new { subjectId = subject.SubjectId })" class="btn btn-primary">Create</a>
+        </div>
+    </div>
+
+}
+
+<h2>Create New Subject</h2>
+<form method="post" asp-controller="Subject" asp-action="Create">
+    <input type="text" asp-for="SubjectName" placeholder="Enter new subject name" />
+    <button type="submit">Create</button>
+</form>
+

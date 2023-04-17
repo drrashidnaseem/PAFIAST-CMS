@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AuthSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class newMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,25 @@ namespace AuthSystem.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId1 = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.SubjectId);
+                    table.ForeignKey(
+                        name: "FK_Subjects_Subjects_SubjectId1",
+                        column: x => x.SubjectId1,
+                        principalTable: "Subjects",
+                        principalColumn: "SubjectId");
                 });
 
             migrationBuilder.CreateTable(
@@ -158,6 +177,56 @@ namespace AuthSystem.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Blanks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Statement = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Synonym1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Synonym2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Synonym3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blanks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blanks_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "SubjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MCQs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Option1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Option2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Option3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MCQs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MCQs_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "SubjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -196,6 +265,21 @@ namespace AuthSystem.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blanks_SubjectId",
+                table: "Blanks",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MCQs_SubjectId",
+                table: "MCQs",
+                column: "SubjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_SubjectId1",
+                table: "Subjects",
+                column: "SubjectId1");
         }
 
         /// <inheritdoc />
@@ -217,10 +301,19 @@ namespace AuthSystem.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Blanks");
+
+            migrationBuilder.DropTable(
+                name: "MCQs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Subjects");
         }
     }
 }
