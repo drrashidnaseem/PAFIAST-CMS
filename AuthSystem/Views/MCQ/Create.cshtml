@@ -1,0 +1,112 @@
+﻿
+@model MCQ;
+@{
+    ViewData["Title"] = "Create|MCQ";
+}
+
+<h1>MCQ Creation</h1>
+
+<form method="post">
+    <div>
+        <label>Statement</label>
+
+        <textarea class="form-control" id="statement"
+                  asp-for="Content"
+                  placeholder="Provide a Question statement"></textarea>
+        <label>Answer</label>
+
+        <input class="form-control"
+               asp-for="Answer" placeholder="Provide an Answer" id="answer"  readonly />
+        <label>Options</label>
+        <textarea class="form-control" 
+               asp-for="Option1" placeholder="Option 1" id="option1" ></textarea>
+
+        <textarea class="form-control"
+                  asp-for="Option2" placeholder="Option 2" id="option2"></textarea> <textarea class="form-control"
+                                                                                              asp-for="Option3" placeholder="Option 3" id="option3"></textarea>
+
+        <div class="center-block" style="display : flex; flex-direction : column">
+            <h3>Please select an option as an answer</h3>
+            <label for="radioOption1">Option 1</label>
+            <input type="radio" class="form-check-input" value="" name="Answer" id="radioOption1" />
+            <label for="radioOption2">Option 2</label>
+            <input type="radio" class="form-check-input" value="" name="Answer" id="radioOption2" />
+            <label for="radioOption3">Option 3</label>
+            <input type="radio" class="form-check-input" value="" name="Answer" id="radioOption3" />
+
+        </div>
+       
+        <div class="center-block" style="display : flex; flex-direction : column">
+            <h3>Please select a difficulty level for this answer</h3>
+            <label for="Easy">Easy</label>
+            <input type="radio" value="Easy" class="form-check-input" name="difficulty" asp-for="Difficulty" id="Easy" />
+            <label for="Medium">Medium</label>
+            <input type="radio" value="Medium" class="form-check-input" name="difficulty" asp-for="Difficulty" id="Medium" />
+            <label for="Hard">Hard</label>
+            <input type="radio" value="Hard" class="form-check-input" name="difficulty" asp-for="Difficulty" id="Hard" />
+        </div>
+
+        <button class=" btn btn-dark" style="margin-top:10px">Create</button>
+
+    </div>
+
+</form>
+<div style="display : flex; flex-direction : column">
+    <span asp-validation-for="Content" class="text-danger"></span>
+    <span asp-validation-for="Answer" class="text-danger"></span>
+    <span asp-validation-for="Option1" class="text-danger"></span>
+    <span asp-validation-for="Option2" class="text-danger"></span>
+    <span asp-validation-for="Option3" class="text-danger"></span>
+</div>
+<script src="https://cdn.tiny.cloud/1/ity2yj9qnyexhb9d3n2so42uklxs5mo5n84povwn2rrfueya/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    var answerField = document.getElementById("answer");
+    var radioOption1 = document.getElementById("radioOption1");
+    var radioOption2 = document.getElementById("radioOption2");
+    var radioOption3 = document.getElementById("radioOption3");
+
+    radioOption1.addEventListener("click", function () {
+        answerField.value = document.getElementById("option1").value;
+    });
+
+    radioOption2.addEventListener("click", function () {
+        answerField.value = tinymce.get('option2').getContent({ format: 'text' });
+    });
+
+    radioOption3.addEventListener("click", function () {
+        answerField.value = tinymce.get('option3').getContent({ format: 'text' });
+    });
+
+
+
+    tinymce.init({
+        selector: '#statement',
+        plugins: 'anchor autolink charmap codesample emoticons image link lists searchreplace table visualblocks wordcount checklist casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image  table mergetags  | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+
+    tinymce.init({
+        selector: '#option1',
+        width: 500,
+        height: 200,
+        plugins: 'anchor autolink charmap codesample emoticons image link lists searchreplace table visualblocks wordcount checklist casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image  table mergetags  | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+     tinymce.init({
+        selector: '#option2',
+        width: 500,
+        height: 200,
+
+        plugins: 'anchor autolink charmap codesample emoticons image link lists searchreplace table visualblocks wordcount checklist casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image  table mergetags  | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    }); tinymce.init({
+        selector: '#option3',
+        width: 500,
+        height: 200,
+        plugins: 'anchor autolink charmap codesample emoticons image link lists searchreplace table visualblocks wordcount checklist casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image  table mergetags  | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+    });
+
+
+</script>
+

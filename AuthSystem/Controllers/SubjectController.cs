@@ -1,5 +1,6 @@
 ﻿using AuthSystem.Data;
 using AuthSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -13,6 +14,7 @@ namespace AuthSystem.Controllers
 
             _test = test;
         }
+        [Authorize]
         public IActionResult Index()
         {
             var subjects = _test.Subjects.ToList();
@@ -51,7 +53,7 @@ namespace AuthSystem.Controllers
             HttpContext.Session.SetInt32("SelectedSubjectId", subjectId);
 
             // Redirect to the next screen
-            return RedirectToAction("Create", "Question");
+            return RedirectToAction("Index", "QuestionType");
         }
     }
 }
