@@ -1,25 +1,25 @@
-﻿
-@model MCQ;
+﻿@model MCQ;
+
 @{
-    ViewData["Title"] = "Create|MCQ";
+    ViewData["Title"] = "Edit|MCQ";
 }
 
-<h1>MCQ Creation</h1>
+<h1>Edit|MCQ</h1>
 
 <form method="post">
     <div>
         <label>Statement</label>
-        <input type="file" class="forn-control"/>
+
         <textarea class="form-control" id="statement"
                   asp-for="Content"
                   placeholder="Provide a Question statement"></textarea>
         <label>Answer</label>
 
         <input class="form-control"
-               asp-for="Answer" placeholder="Provide an Answer" id="answer"  readonly />
+               asp-for="Answer" placeholder="Provide an Answer" id="answer" readonly />
         <label>Options</label>
-        <textarea class="form-control" 
-               asp-for="Option1" placeholder="Option 1" id="option1" ></textarea>
+        <textarea class="form-control"
+                  asp-for="Option1" placeholder="Option 1" id="option1"></textarea>
 
         <textarea class="form-control"
                   asp-for="Option2" placeholder="Option 2" id="option2"></textarea> <textarea class="form-control"
@@ -35,7 +35,7 @@
             <input type="radio" class="form-check-input" value="" name="Answer" id="radioOption3" />
 
         </div>
-       
+
         <div class="center-block" style="display : flex; flex-direction : column">
             <h3>Please select a difficulty level for this answer</h3>
             <label for="Easy">Easy</label>
@@ -56,13 +56,6 @@
         <span asp-validation-for="Option2" class="text-danger"></span>
         <span asp-validation-for="Option3" class="text-danger"></span>
     </div>
-</form>
-<form method="post" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="MCQ" >
-    <div class="form-group">
-        <label for="file">Select Excel file:</label>
-        <input type="file" name="file" id="file" class="form-control-file">
-    </div>
-    <button type="submit" class="btn btn-primary" >Upload</button>
 </form>
 
 <script src="https://cdn.tiny.cloud/1/ity2yj9qnyexhb9d3n2so42uklxs5mo5n84povwn2rrfueya/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
@@ -99,7 +92,7 @@
         plugins: 'anchor autolink charmap codesample emoticons image link lists searchreplace table visualblocks wordcount checklist casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage  tableofcontents footnotes mergetags autocorrect typography',
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image  table mergetags  | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
     });
-     tinymce.init({
+    tinymce.init({
         selector: '#option2',
         width: 500,
         height: 200,
@@ -116,4 +109,3 @@
 
 
 </script>
-

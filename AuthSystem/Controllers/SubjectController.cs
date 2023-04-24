@@ -15,7 +15,19 @@ namespace AuthSystem.Controllers
             _test = test;
         }
         [Authorize]
+        [HttpGet]
         public IActionResult Index()
+        {
+            var subjects = _test.Subjects.ToList();
+            var viewModel = new Subject
+            {
+                Subjects = subjects
+            };
+            return View(viewModel);
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult Subjects()
         {
             var subjects = _test.Subjects.ToList();
             var viewModel = new Subject
@@ -55,5 +67,6 @@ namespace AuthSystem.Controllers
             // Redirect to the next screen
             return RedirectToAction("Index", "QuestionType");
         }
+
     }
 }
