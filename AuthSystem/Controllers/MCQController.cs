@@ -155,8 +155,10 @@ namespace AuthSystem.Controllers
                             Option2 = worksheet.Cells[row, 4].Value?.ToString(),
                             Option3 = worksheet.Cells[row, 5].Value?.ToString(),
                             Difficulty = worksheet.Cells[row, 6].Value?.ToString(),
-                            SubjectId = Convert.ToInt32(worksheet.Cells[row, 7].Value)
-                        };
+                            SubjectId = HttpContext.Session.GetInt32("SelectedSubjectId").Value
+
+
+                    };
                         Console.WriteLine($"Row {row}:");
                         Console.WriteLine($"Content: {question.Content}");
                         Console.WriteLine($"Answer: {question.Answer}");

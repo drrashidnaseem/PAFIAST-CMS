@@ -10,5 +10,9 @@ namespace AuthSystem.Controllers
         {
             return View();
         }
+        public IActionResult CreationType() {
+            return View();
+        
+        }
     }
 }
