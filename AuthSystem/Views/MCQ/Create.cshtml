@@ -67,7 +67,7 @@
     var radioOption3 = document.getElementById("radioOption3");
 
     radioOption1.addEventListener("click", function () {
-        answerField.value = document.getElementById("option1").value;
+        answerField.value = tinymce.get('option1').getContent({ format: 'text' });
     });
 
     radioOption2.addEventListener("click", function () {
