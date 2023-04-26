@@ -51,3 +51,12 @@ body {
     cursor : pointer;
         
 }
+.uploadFileContainer {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    border-image: linear-gradient(to right, #ff0000, #0000ff);
+    border-image-slice: 10;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius : 10px
+}
