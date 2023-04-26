@@ -45,3 +45,9 @@ body {
 .login-logout-card .card-header0 {
     padding: 10px 20px;
 }
+
+.bg :hover {
+    background-color : cadetblue;
+    cursor : pointer;
+        
+}

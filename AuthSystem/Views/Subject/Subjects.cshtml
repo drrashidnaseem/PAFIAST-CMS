@@ -1,0 +1,19 @@
+﻿@model AuthSystem.Models.Subject
+
+@{
+
+    ViewData["Title"] = "Subjects";
+}
+
+<h1>My Subjects</h1>
+
+
+@foreach (var subject in Model.Subjects)
+{
+    <div class="card bg" style="width: 12rem;">
+        <div class="card-body">
+            <h5>@subject.SubjectName</h5>
+        </div>
+    </div>
+
+}

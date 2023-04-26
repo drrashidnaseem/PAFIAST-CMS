@@ -1,0 +1,53 @@
+﻿@model IEnumerable<MCQ>
+@{
+    ViewData["Title"] = "MCQ's";
+}
+<h1>View Question</h1>
+<table class="table table-bordered table-stripped">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Option1</th>
+            <th>Option2</th>
+            <th>Option3</th>
+            <th>Subject Name</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+            <th>SubjectID</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td>@Html.Raw(@question.Content)</td>
+                <td>@Html.Raw(@question.Answer)</td>
+                <td> @Html.Raw(@question.Option1) </td>
+                <td>@Html.Raw(@question.Option2) </td>
+
+
+                <td>@Html.Raw(@question.Option3)</td>
+                <td>
+                    @if (question.Subject != null)
+                    {
+                        <p>Subject Name:</p> <h4>@question.Subject.SubjectName</h4>
+                    }
+                    else
+                    {
+                        <p>Subject Name: N/A</p>
+                    }
+                </td>
+                <td>@question.Difficulty</td>
+                <td>
+                    <div>
+                        <a class="btn btn-info" asp-route-id="@question.Id" asp-controller="MCQ" asp-action="Edit">Edit</a>
+                        <a class="btn btn-danger" asp-controller="MCQ" asp-action="Delete" asp-route-id="@question.Id">Delete</a>
+                    </div>
+                </td>
+                <td>@question.SubjectId</td>
+            </tr>
+        }
+    </tbody>
+</table>
