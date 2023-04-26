@@ -115,6 +115,10 @@ namespace AuthSystem.Controllers
             return View(questionData);
         
         }
+        public IActionResult UploadFile() {
+
+            return View();
+        }
         [HttpPost]
         [HttpPost]
         public IActionResult UploadFile(IFormFile file)
