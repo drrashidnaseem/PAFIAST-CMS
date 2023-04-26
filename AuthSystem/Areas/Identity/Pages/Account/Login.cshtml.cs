@@ -117,8 +117,6 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
-                    
-
                 }
                 if (result.RequiresTwoFactor)
                 {
