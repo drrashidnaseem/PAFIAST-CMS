@@ -28,6 +28,11 @@
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
+                <input asp-for="Input.MobileNumber" class="form-control" aria-required="true" placeholder="+92xxxxxxxxxx" />
+                <label asp-for="Input.MobileNumber">Mobile Number</label>
+                <span asp-validation-for="Input.MobileNumber" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.Password">Password</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
