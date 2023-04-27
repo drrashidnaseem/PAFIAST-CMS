@@ -4,6 +4,8 @@
 }
 
 <h1>My Questions</h1>
+
+
 @foreach (var question in Model) {
 
     <div class="card">
@@ -15,6 +17,11 @@
             <a class="btn btn-success" asp-controller="MCQ" asp-action="View" asp-route-id="@question.Id">View</a>
             <a class="btn btn-success" >@question.Difficulty</a>
 
+
         </div>
+
+
     </div>
+    <div id="button1">Button 1</div>
+    <div id="button2">Button 2</div>
 }
