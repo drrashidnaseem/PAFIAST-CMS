@@ -51,21 +51,33 @@ namespace AuthSystem.Controllers
             }
 
 
-            // Redirect to the original view or another appropriate view
             return RedirectToAction("Index");
 
 
 
-            // If model state is not valid, return to the same view with validation errors
 
         }
         public IActionResult SelectSubject(int subjectId)
         {
-            // Store the selected subject in session
             HttpContext.Session.SetInt32("SelectedSubjectId", subjectId);
 
-            // Redirect to the next screen
             return RedirectToAction("Index", "QuestionType");
+        }
+        public IActionResult DeleteSubject( int id) {
+            var SubjectData = _test.Subjects.Find(id);
+            var MCQ = _test.MCQs.Where(x => x.SubjectId == id);
+            var FIB = _test.Blanks.Where(x => x.SubjectId == id);
+            if (SubjectData == null) {
+
+                return NotFound();
+                    }
+            _test.Subjects.Remove(SubjectData);
+            _test.MCQs.RemoveRange(MCQ);
+            _test.Blanks.RemoveRange(FIB);
+            _test.SaveChanges();
+            return RedirectToAction("Index");
+
+        
         }
 
     }

@@ -12,6 +12,7 @@
                 <h5>@subject.SubjectName</h5>
 
                 <a href="@Url.Action("SelectSubject", "Subject", new { subjectId = subject.SubjectId })" class="btn btn-primary">Create</a>
+            <a  asp-route-id="@subject.SubjectId" class="btn btn-danger" asp-action="DeleteSubject" asp-controller="Subject">Delete</a>
         </div>
     </div>
 
