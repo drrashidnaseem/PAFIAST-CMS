@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Choose Creation Type";
+}
+
+<h1>How do you like to create a question</h1>
+
+
+<a href="@Url.Action("Create", "FIB")" style="text-decoration : none;">
+
+    <div class="card bg" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Creat Manually</h5>
+            <p class="card-text">Create a question by manually privided question content</p>
+        </div>
+    </div>
+</a>
+<a href="@Url.Action("UploadFileFIB", "FIB")" style="text-decoration : none;">
+
+    <div class="card bg" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Upload Questions from an Excel File</h5>
+            <p class="card-text">Make sure to provide the excel file that has the right format</p>
+        </div>
+    </div>
+</a>
+<a href="@Url.Action("ViewBlanks", "FIB")" style="text-decoration : none;">
+
+    <div class="card bg" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">View all Fill in the blanks questions</h5>
+            <p class="card-text">See all created FIB's</p>
+        </div>
+    </div>
+</a>

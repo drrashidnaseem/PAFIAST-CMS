@@ -14,5 +14,9 @@ namespace AuthSystem.Controllers
             return View();
         
         }
+        public IActionResult CreationTypeFIB() {
+            return View();
+        
+        }
     }
 }

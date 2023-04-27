@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Blank>
+@{
+    ViewData["Title"] = "View Blanks";
+}
+
+<h1>View Blanks</h1>
+
+<table class="table table-bordered table-stripped">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Answer</th>
+            <th>Synonym1</th>
+            <th>Synonym2</th>
+            <th>Synonym3</th>
+            <th>Subject Name</th>
+            <th>Difficulty</th>
+            <th>Actions</th>
+            <th>SubjectID</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var question in Model)
+        {
+            <tr>
+                <td>@Html.Raw(@question.Statement)</td>
+                <td>@Html.Raw(@question.Answer)</td>
+                <td> @Html.Raw(@question.Synonym1) </td>
+                <td>@Html.Raw(@question.Synonym2) </td>
+
+
+                <td>@Html.Raw(@question.Synonym3)</td>
+                <td>
+                    @if (question.Subject != null)
+                    {
+                        <p>Subject Name:</p> <h4>@question.Subject.SubjectName</h4>
+                    }
+                    else
+                    {
+                        <p>Subject Name: N/A</p>
+                    }
+                </td>
+                <td>@question.Difficulty</td>
+                <td>
+                    <div>
+                        <a class="btn btn-info" asp-route-id="@question.Id" asp-controller="MCQ" asp-action="Edit">Edit</a>
+                        <a class="btn btn-danger" asp-controller="MCQ" asp-action="Delete" asp-route-id="@question.Id">Delete</a>
+                    </div>
+                </td>
+                <td>@question.SubjectId</td>
+            </tr>
+        }
+    </tbody>
+</table>

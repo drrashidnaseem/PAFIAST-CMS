@@ -1,10 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model MCQ;
 @{
     ViewData["Title"] = "Upload|Questions";
 }
-
 <div class="uploadFileContainer">
     <form method="post" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="MCQ">
         <div class="form-group">
@@ -13,4 +10,11 @@
         </div>
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
+</div>
+<div style="display : flex; flex-direction : column">
+    <span asp-validation-for="Content" class="text-danger"></span>
+    <span asp-validation-for="Answer" class="text-danger"></span>
+    <span asp-validation-for="Option1" class="text-danger"></span>
+    <span asp-validation-for="Option2" class="text-danger"></span>
+    <span asp-validation-for="Option3" class="text-danger"></span>
 </div>
