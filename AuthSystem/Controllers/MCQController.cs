@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using Excel = Microsoft.Office.Interop.Excel;
 namespace AuthSystem.Controllers
 {
     public class MCQController : Controller
@@ -163,14 +164,7 @@ namespace AuthSystem.Controllers
 
 
                     };
-                        Console.WriteLine($"Row {row}:");
-                        Console.WriteLine($"Content: {question.Content}");
-                        Console.WriteLine($"Answer: {question.Answer}");
-                        Console.WriteLine($"Option1: {question.Option1}");
-                        Console.WriteLine($"Option2: {question.Option2}");
-                        Console.WriteLine($"Option3: {question.Option3}");
-                        Console.WriteLine($"Difficulty: {question.Difficulty}");
-                        Console.WriteLine($"SubjectId: {question.SubjectId}");
+                        
                         if (string.IsNullOrEmpty(question.Answer))
                         {
                             ModelState.AddModelError("Answer", $"The answer for row {row} is required.");
