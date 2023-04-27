@@ -52,7 +52,7 @@ namespace AuthSystem.Controllers
 
 
             // Redirect to the original view or another appropriate view
-            return RedirectToAction("Index");
+            return RedirectToAction("Subjects");
 
 
 
