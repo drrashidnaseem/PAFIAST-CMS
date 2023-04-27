@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.Web.Helpers;
+using System.Net.Mail;
+using System.Net;
 
 namespace AuthSystem.Areas.Identity.Pages.Account
 {
@@ -153,7 +156,16 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
-
+                    
+                    
+                    // To send confirmation email to user aaccount
+                    var client = new SmtpClient("sandbox.smtp.mailtrap.io", 2525)
+                    {
+                        Credentials = new NetworkCredential("9aa8e727894e55", "41cb28f1b53f5e"),
+                        EnableSsl = true
+                    };
+                    client.Send("saahsan90@gmail.com", Input.Email, "Hello world", "Please click on following link to Confirm: " + callbackUrl);
+                    /////////////////   
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 

@@ -3,24 +3,53 @@
 @{
     ViewData["Title"] = "Select Subject";
 }
+<style>
+    * {
+        box-sizing: border-box;
+    }
 
-<h1>Select Subject</h1>
-@foreach (var subject in Model.Subjects)
-{
-    <div class="card bg" style="width: 12rem;">
-        <div class="card-body">
-                <h5>@subject.SubjectName</h5>
+    /* Create three equal columns that floats next to each other */
+    .column {
+        float: left;
+        
+        margin:5px;
+        padding: 10px;
+        height: 120px; /* Should be removed. Only for demonstration */
+        background-color: lightblue;
+        display: flex;
+        flex-direction: row;
+        border-radius: 15px;
+        
+    }
 
-                <a href="@Url.Action("SelectSubject", "Subject", new { subjectId = subject.SubjectId })" class="btn btn-primary">Create</a>
-            <a  asp-route-id="@subject.SubjectId" class="btn btn-danger" asp-action="DeleteSubject" asp-controller="Subject">Delete</a>
-        </div>
-    </div>
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
 
-}
 
-<h2>Create New Subject</h2>
-<form method="post" asp-controller="Subject" asp-action="Create" class="form-control-lg" >
-    <input type="text" asp-for="SubjectName" placeholder="Enter new subject name" class="form-control" />
-    <button type="submit" class="btn btn-secondary">Create</button>
-</form>
+    }
+
+</style>
+<div>
+    <h1>Create Questions</h1>
+    @foreach (var subject in Model.Subjects)
+    {
+
+        <a href="@Url.Action("SelectSubject", "Subject", new { subjectId = subject.SubjectId })" >
+
+
+            <div class="column" style="width: 15rem; background-color:lightblue ; display:flex; flex-direction:row;">
+                <div class="card-body">
+                    <h5>@subject.SubjectName</h5>
+                </div>
+            </div>
+
+
+        </a>
+
+    }
+</div>
+
 

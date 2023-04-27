@@ -51,7 +51,8 @@ namespace AuthSystem.Controllers
             }
 
 
-            return RedirectToAction("Index");
+            // Redirect to the original view or another appropriate view
+            return RedirectToAction("Subjects");
 
 
 

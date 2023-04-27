@@ -6,7 +6,29 @@
 }
 
 <h1>How do you like to Create a Question?</h1>
+<div id="button1">
+    <a href="@Url.Action("Create", "MCQ")" target="_blank" style="text-decoration : none; color:white;"> Create manually</a>
+</div>
+<div id="button2">
+    <a href="@Url.Action("UploadFile", "MCQ")" target="_blank" style="text-decoration : none; color:white;"> Upload file </a>
+</div>
 
+
+<style>
+    #button1, #button2 {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 50px 120px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+</style>
+<!--
 <a href="@Url.Action("Create", "MCQ")" style="text-decoration : none;">
 
     <div class="card bg" style="width: 18rem;">
@@ -25,4 +47,6 @@
         </div>
     </div>
 </a>
+-->
+
 
