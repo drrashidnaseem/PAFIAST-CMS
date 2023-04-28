@@ -164,7 +164,7 @@ namespace AuthSystem.Areas.Identity.Pages.Account
                         Credentials = new NetworkCredential("no-reply@dastyaab.com", "Zounds@4321"),
                         EnableSsl = true
                     };
-                    client.Send("no-reply@dastyaab.com", Input.Email, "Hello world", "Please click on following link to Confirm: " + callbackUrl);
+                    client.Send("no-reply@dastyaab.com", Input.Email, "Welcome to PAF-IAST", "Please click on following link to Confirm: " + callbackUrl);
                     //                    client.Send("no-reply@dastyaab.com", Input.Email, "Hello world", "Please click on following link to Confirm: " + callbackUrl);
                     /////////////////   
 
