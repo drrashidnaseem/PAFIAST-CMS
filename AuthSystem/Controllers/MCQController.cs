@@ -121,7 +121,6 @@ namespace AuthSystem.Controllers
             return View();
         }
         [HttpPost]
-        [HttpPost]
         public IActionResult UploadFile(IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -182,9 +181,14 @@ namespace AuthSystem.Controllers
             }
 
             // Save the questions to the database
-            _test.MCQs.AddRange(questions);
-            _test.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid) {
+                _test.MCQs.AddRange(questions);
+                _test.SaveChanges();
+                return RedirectToAction("Index");
+
+            }
+            return View();
+       
         }
 
 
