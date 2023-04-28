@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Blank>;
+
+@{
+    ViewData["Title"] = "View|Questions|FIB";
+}
+
+<h1>View Questions</h1>
+
+<div>
+    @foreach (var questions in Model)
+    {
+
+        <p>@questions.Statement</p>
+        <h2>@questions.Subject.SubjectName</h2>
+
+
+    }
+</div>
