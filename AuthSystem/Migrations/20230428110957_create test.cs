@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AuthSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class newmigration : Migration
+    public partial class createtest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -69,6 +69,25 @@ namespace AuthSystem.Migrations
                         column: x => x.SubjectId1,
                         principalTable: "Subjects",
                         principalColumn: "SubjectId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tests",
+                columns: table => new
+                {
+                    TestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TestName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TestId1 = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tests", x => x.TestId);
+                    table.ForeignKey(
+                        name: "FK_Tests_Tests_TestId1",
+                        column: x => x.TestId1,
+                        principalTable: "Tests",
+                        principalColumn: "TestId");
                 });
 
             migrationBuilder.CreateTable(
@@ -280,6 +299,11 @@ namespace AuthSystem.Migrations
                 name: "IX_Subjects_SubjectId1",
                 table: "Subjects",
                 column: "SubjectId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tests_TestId1",
+                table: "Tests",
+                column: "TestId1");
         }
 
         /// <inheritdoc />
@@ -305,6 +329,9 @@ namespace AuthSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "MCQs");
+
+            migrationBuilder.DropTable(
+                name: "Tests");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
