@@ -1,0 +1,56 @@
+﻿@model AuthSystem.Models.Test
+@{
+    ViewData["Title"] = "Create Test";
+}
+
+<h1>Create a new test</h1>
+
+<form method="post" asp-action="Create" asp-controller="Test">
+    <div>
+        <label for="testName">Test Name:</label>
+        <input type="text" id="testName" name="testName" />
+    </div>
+
+    <div>
+        @foreach (var subject in Model.Subjects)
+        {
+            <div>
+                <input type="checkbox" name="selectedSubjectIds" value="@subject.SubjectId" id="subject_@subject.SubjectId" />
+                <label for="subject_@subject.SubjectId">@subject.SubjectName</label>
+                <input type="number" name="percentages[@subject.SubjectId]" id="percentage_@subject.SubjectId" min="0" max="100" />
+                %
+            </div>
+        }
+    </div>
+
+    <button type="submit">Create</button>
+</form>
+
+<hr />
+
+<h2>Test List</h2>
+
+@if (Model.TestList.Count() == 0)
+{
+    <p>No tests found.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Test Name</th>
+                <th>Subjects</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var test in Model.TestList)
+            {
+                <tr>
+                    <td>@test.TestName</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}

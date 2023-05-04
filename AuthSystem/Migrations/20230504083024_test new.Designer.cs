@@ -4,6 +4,7 @@ using AuthSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthSystem.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    partial class AuthDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230504083024_test new")]
+    partial class testnew
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,64 +194,11 @@ namespace AuthSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TestId")
-                        .HasColumnType("int");
-
                     b.HasKey("SubjectId");
 
                     b.HasIndex("SubjectId1");
 
-                    b.HasIndex("TestId");
-
                     b.ToTable("Subjects");
-                });
-
-            modelBuilder.Entity("AuthSystem.Models.Test", b =>
-                {
-                    b.Property<int>("TestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
-
-                    b.Property<int?>("TestId1")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TestName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TestId");
-
-                    b.HasIndex("TestId1");
-
-                    b.ToTable("Tests");
-                });
-
-            modelBuilder.Entity("AuthSystem.Models.TestDetail", b =>
-                {
-                    b.Property<int>("TestDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestDetailId"));
-
-                    b.Property<int>("Percentage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TestDetailId");
-
-                    b.HasIndex("SubjectId");
-
-                    b.HasIndex("TestId");
-
-                    b.ToTable("TestsDetail");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -388,6 +338,23 @@ namespace AuthSystem.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Test", b =>
+                {
+                    b.Property<int>("TestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
+
+                    b.Property<string>("TestName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TestId");
+
+                    b.ToTable("Tests");
+                });
+
             modelBuilder.Entity("AuthSystem.Models.Blank", b =>
                 {
                     b.HasOne("AuthSystem.Models.Subject", "Subject")
@@ -415,36 +382,6 @@ namespace AuthSystem.Migrations
                     b.HasOne("AuthSystem.Models.Subject", null)
                         .WithMany("Subjects")
                         .HasForeignKey("SubjectId1");
-
-                    b.HasOne("AuthSystem.Models.Test", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("TestId");
-                });
-
-            modelBuilder.Entity("AuthSystem.Models.Test", b =>
-                {
-                    b.HasOne("AuthSystem.Models.Test", null)
-                        .WithMany("TestList")
-                        .HasForeignKey("TestId1");
-                });
-
-            modelBuilder.Entity("AuthSystem.Models.TestDetail", b =>
-                {
-                    b.HasOne("AuthSystem.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AuthSystem.Models.Test", "Test")
-                        .WithMany()
-                        .HasForeignKey("TestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-
-                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -501,13 +438,6 @@ namespace AuthSystem.Migrations
             modelBuilder.Entity("AuthSystem.Models.Subject", b =>
                 {
                     b.Navigation("Subjects");
-                });
-
-            modelBuilder.Entity("AuthSystem.Models.Test", b =>
-                {
-                    b.Navigation("Subjects");
-
-                    b.Navigation("TestList");
                 });
 #pragma warning restore 612, 618
         }
