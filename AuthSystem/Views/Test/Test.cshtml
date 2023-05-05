@@ -40,11 +40,13 @@
 }
 else
 {
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 <th>Test Name</th>
-                <th>Subjects</th>
+                <th>Created By</th>
+                <th>Subjects Included</th>
+
             </tr>
         </thead>
         <tbody>
@@ -52,8 +54,8 @@ else
             {
                 <tr>
                     <td>@test.Test.TestName</td>
-                    <td>@test.Subject.SubjectName</td>
-                    <td>@test.Percentage</td>
+                    <td>@test.Test.CreatedBy</td>
+                    <td>@test.Subject.SubjectName @test.Percentage%</td>
                 </tr>
             }
         </tbody>
