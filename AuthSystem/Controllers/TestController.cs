@@ -1,8 +1,11 @@
-﻿using AuthSystem.Data;
-using AuthSystem.Migrations;
+﻿using AuthSystem.Areas.Identity.Data;
+using AuthSystem.Data;
 using AuthSystem.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 using System.Runtime.InteropServices.JavaScript;
 
 namespace AuthSystem.Controllers
@@ -10,17 +13,21 @@ namespace AuthSystem.Controllers
     public class TestController : Controller
     {
         private readonly AuthDbContext _test;
+
         public TestController(AuthDbContext test) {
 
             _test = test;
+            
         
         }
+      
         public IActionResult Test()
         {
             var viewModel = new Test
             {
                 TestList = _test.Tests.ToList(),
-                Subjects = _test.Subjects.ToList()
+                Subjects = _test.Subjects.Include(td => td.Subjects).ToList(),
+                TestDetails = _test.TestsDetail.Include(td => td.Test).ToList()
             };
 
             return View(viewModel);
@@ -33,7 +40,7 @@ namespace AuthSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var test = new Test { TestName = testName };
+                var test = new Test { TestName = testName , CreatedBy = "User" };
                 _test.Tests.Add(test);
                 await _test.SaveChangesAsync();
 
@@ -41,7 +48,7 @@ namespace AuthSystem.Controllers
                 {
                     var testDetails = new TestDetail
                     {
-                        TestId = test.TestId,
+                        Id = test.Id,
                         SubjectId = subjectId,
                         Percentage = percentages[subjectId]
                     };

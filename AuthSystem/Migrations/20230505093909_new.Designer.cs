@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthSystem.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230428110957_create test")]
-    partial class createtest
+    [Migration("20230505093909_new")]
+    partial class @new
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -194,33 +194,69 @@ namespace AuthSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TestId")
+                        .HasColumnType("int");
+
                     b.HasKey("SubjectId");
 
                     b.HasIndex("SubjectId1");
+
+                    b.HasIndex("TestId");
 
                     b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("AuthSystem.Models.Test", b =>
                 {
-                    b.Property<int>("TestId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("TestId1")
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TestId")
                         .HasColumnType("int");
 
                     b.Property<string>("TestName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TestId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("TestId1");
+                    b.HasIndex("TestId");
 
                     b.ToTable("Tests");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.TestDetail", b =>
+                {
+                    b.Property<int>("TDId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TDId"));
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Percentage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TDId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("Id", "SubjectId")
+                        .IsUnique();
+
+                    b.ToTable("TestsDetail");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -387,13 +423,36 @@ namespace AuthSystem.Migrations
                     b.HasOne("AuthSystem.Models.Subject", null)
                         .WithMany("Subjects")
                         .HasForeignKey("SubjectId1");
+
+                    b.HasOne("AuthSystem.Models.Test", null)
+                        .WithMany("Subjects")
+                        .HasForeignKey("TestId");
                 });
 
             modelBuilder.Entity("AuthSystem.Models.Test", b =>
                 {
                     b.HasOne("AuthSystem.Models.Test", null)
-                        .WithMany("Tests")
-                        .HasForeignKey("TestId1");
+                        .WithMany("TestList")
+                        .HasForeignKey("TestId");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.TestDetail", b =>
+                {
+                    b.HasOne("AuthSystem.Models.Test", "Test")
+                        .WithMany("TestDetails")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AuthSystem.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
+
+                    b.Navigation("Test");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -454,7 +513,11 @@ namespace AuthSystem.Migrations
 
             modelBuilder.Entity("AuthSystem.Models.Test", b =>
                 {
-                    b.Navigation("Tests");
+                    b.Navigation("Subjects");
+
+                    b.Navigation("TestDetails");
+
+                    b.Navigation("TestList");
                 });
 #pragma warning restore 612, 618
         }

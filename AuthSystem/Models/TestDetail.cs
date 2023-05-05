@@ -6,10 +6,10 @@ namespace AuthSystem.Models
     public class TestDetail
     {
         [Key]
-        public int TestDetailId { get; set; }
+        public int TDId { get; set; }
 
         [ForeignKey("Test")]
-        public int TestId { get; set; }
+        public int  Id { get; set; }
         public Test Test { get; set; }
 
         [ForeignKey("Subject")]

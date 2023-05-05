@@ -205,33 +205,40 @@ namespace AuthSystem.Migrations
 
             modelBuilder.Entity("AuthSystem.Models.Test", b =>
                 {
-                    b.Property<int>("TestId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("TestId1")
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TestId")
                         .HasColumnType("int");
 
                     b.Property<string>("TestName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("TestId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("TestId1");
+                    b.HasIndex("TestId");
 
                     b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("AuthSystem.Models.TestDetail", b =>
                 {
-                    b.Property<int>("TestDetailId")
+                    b.Property<int>("TDId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestDetailId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TDId"));
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<int>("Percentage")
                         .HasColumnType("int");
@@ -239,14 +246,12 @@ namespace AuthSystem.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TestId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TestDetailId");
+                    b.HasKey("TDId");
 
                     b.HasIndex("SubjectId");
 
-                    b.HasIndex("TestId");
+                    b.HasIndex("Id", "SubjectId")
+                        .IsUnique();
 
                     b.ToTable("TestsDetail");
                 });
@@ -425,20 +430,20 @@ namespace AuthSystem.Migrations
                 {
                     b.HasOne("AuthSystem.Models.Test", null)
                         .WithMany("TestList")
-                        .HasForeignKey("TestId1");
+                        .HasForeignKey("TestId");
                 });
 
             modelBuilder.Entity("AuthSystem.Models.TestDetail", b =>
                 {
-                    b.HasOne("AuthSystem.Models.Subject", "Subject")
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
+                    b.HasOne("AuthSystem.Models.Test", "Test")
+                        .WithMany("TestDetails")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AuthSystem.Models.Test", "Test")
+                    b.HasOne("AuthSystem.Models.Subject", "Subject")
                         .WithMany()
-                        .HasForeignKey("TestId")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -506,6 +511,8 @@ namespace AuthSystem.Migrations
             modelBuilder.Entity("AuthSystem.Models.Test", b =>
                 {
                     b.Navigation("Subjects");
+
+                    b.Navigation("TestDetails");
 
                     b.Navigation("TestList");
                 });
