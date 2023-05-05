@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthSystem.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20230427062115_new migration")]
-    partial class newmigration
+    [Migration("20230428110957_create test")]
+    partial class createtest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -201,6 +201,28 @@ namespace AuthSystem.Migrations
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("AuthSystem.Models.Test", b =>
+                {
+                    b.Property<int>("TestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
+
+                    b.Property<int?>("TestId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TestName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TestId");
+
+                    b.HasIndex("TestId1");
+
+                    b.ToTable("Tests");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -367,6 +389,13 @@ namespace AuthSystem.Migrations
                         .HasForeignKey("SubjectId1");
                 });
 
+            modelBuilder.Entity("AuthSystem.Models.Test", b =>
+                {
+                    b.HasOne("AuthSystem.Models.Test", null)
+                        .WithMany("Tests")
+                        .HasForeignKey("TestId1");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -421,6 +450,11 @@ namespace AuthSystem.Migrations
             modelBuilder.Entity("AuthSystem.Models.Subject", b =>
                 {
                     b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("AuthSystem.Models.Test", b =>
+                {
+                    b.Navigation("Tests");
                 });
 #pragma warning restore 612, 618
         }

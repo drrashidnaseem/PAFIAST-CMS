@@ -1,0 +1,16 @@
+﻿@model IEnumerable<MCQ>;
+
+@{
+    ViewData["Title"] = "View|Questions|MCQ";
+}
+
+<h1>View Questions</h1>
+
+<div> @foreach (var questions in Model) {
+    
+ <p>@questions.Content</p>
+ <p>@questions.Option1</p>
+ <h2>@questions.Subject.SubjectName</h2>
+
+
+}</div>
