@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AuthSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class createtest : Migration
+    public partial class @new : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,41 +53,23 @@ namespace AuthSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subjects",
-                columns: table => new
-                {
-                    SubjectId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SubjectId1 = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subjects", x => x.SubjectId);
-                    table.ForeignKey(
-                        name: "FK_Subjects_Subjects_SubjectId1",
-                        column: x => x.SubjectId1,
-                        principalTable: "Subjects",
-                        principalColumn: "SubjectId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tests",
                 columns: table => new
                 {
-                    TestId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TestName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TestId1 = table.Column<int>(type: "int", nullable: true)
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TestId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tests", x => x.TestId);
+                    table.PrimaryKey("PK_Tests", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tests_Tests_TestId1",
-                        column: x => x.TestId1,
+                        name: "FK_Tests_Tests_TestId",
+                        column: x => x.TestId,
                         principalTable: "Tests",
-                        principalColumn: "TestId");
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -197,6 +179,31 @@ namespace AuthSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjectId1 = table.Column<int>(type: "int", nullable: true),
+                    TestId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.SubjectId);
+                    table.ForeignKey(
+                        name: "FK_Subjects_Subjects_SubjectId1",
+                        column: x => x.SubjectId1,
+                        principalTable: "Subjects",
+                        principalColumn: "SubjectId");
+                    table.ForeignKey(
+                        name: "FK_Subjects_Tests_TestId",
+                        column: x => x.TestId,
+                        principalTable: "Tests",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Blanks",
                 columns: table => new
                 {
@@ -243,6 +250,33 @@ namespace AuthSystem.Migrations
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "SubjectId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TestsDetail",
+                columns: table => new
+                {
+                    TDId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    SubjectId = table.Column<int>(type: "int", nullable: false),
+                    Percentage = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TestsDetail", x => x.TDId);
+                    table.ForeignKey(
+                        name: "FK_TestsDetail_Subjects_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subjects",
+                        principalColumn: "SubjectId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TestsDetail_Tests_Id",
+                        column: x => x.Id,
+                        principalTable: "Tests",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -301,9 +335,25 @@ namespace AuthSystem.Migrations
                 column: "SubjectId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tests_TestId1",
+                name: "IX_Subjects_TestId",
+                table: "Subjects",
+                column: "TestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tests_TestId",
                 table: "Tests",
-                column: "TestId1");
+                column: "TestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestsDetail_Id_SubjectId",
+                table: "TestsDetail",
+                columns: new[] { "Id", "SubjectId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TestsDetail_SubjectId",
+                table: "TestsDetail",
+                column: "SubjectId");
         }
 
         /// <inheritdoc />
@@ -331,7 +381,7 @@ namespace AuthSystem.Migrations
                 name: "MCQs");
 
             migrationBuilder.DropTable(
-                name: "Tests");
+                name: "TestsDetail");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -341,6 +391,9 @@ namespace AuthSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Subjects");
+
+            migrationBuilder.DropTable(
+                name: "Tests");
         }
     }
 }

@@ -11,7 +11,7 @@
         <input type="text" id="testName" name="testName" />
     </div>
 
-    <div>
+    <div id="subjects-container">
         @foreach (var subject in Model.Subjects)
         {
             <div>
@@ -23,7 +23,11 @@
         }
     </div>
 
-    <button type="submit">Create</button>
+    <div>
+        Total Percentage: <span id="totalPercentage">0</span>%
+    </div>
+
+    <button type="submit" id ="submit-btn">Create</button>
 </form>
 
 <hr />
@@ -32,7 +36,7 @@
 
 @if (Model.TestList.Count() == 0)
 {
-    <p>No tests found.</p>
+    <p>No tests created yet.</p>
 }
 else
 {
@@ -44,13 +48,49 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var test in Model.TestList)
+            @foreach (var test in Model.TestDetails)
             {
                 <tr>
-                    <td>@test.TestName</td>
-                    
+                    <td>@test.Test.TestName</td>
+                    <td>@test.Subject.SubjectName</td>
+                    <td>@test.Percentage</td>
                 </tr>
             }
         </tbody>
     </table>
 }
+
+<script>
+    function calculateTotalPercentage() {
+        var totalPercentage = 0;
+        var percentageInputs = document.querySelectorAll('#subjects-container input[type="number"]');
+        percentageInputs.forEach(function (input) {
+            if (input.value) {
+                totalPercentage += parseInt(input.value);
+            }
+        });
+        var submitButton = document.getElementById("submit-btn")
+            if (totalPercentage != 100) {
+              submitButton.setAttribute('disabled' , 'disabled')
+            }
+            else (
+                submitButton.removeAttribute('disabled')
+            )
+        return totalPercentage;
+    }
+
+    function updateTotalPercentage() {
+        var totalPercentageElement = document.getElementById('totalPercentage');
+        var totalPercentage = calculateTotalPercentage();
+        totalPercentageElement.textContent = totalPercentage;
+    }
+
+    // Call updateTotalPercentage initially and whenever the percentages change
+    updateTotalPercentage();
+    document.querySelectorAll('#subjects-container input[type="number"]').forEach(function (input) {
+        input.addEventListener('input', updateTotalPercentage);
+    
+
+    });
+    
+</script>
